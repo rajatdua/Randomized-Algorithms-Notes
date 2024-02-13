@@ -1,0 +1,256 @@
+\documentclass{article}
+
+
+
+\usepackage{arxiv}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{lipsum}		% Can be removed after putting your text content
+\usepackage{graphicx}
+\usepackage[super]{natbib}
+\usepackage{doi}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{caption} 
+\usepackage{multicol}
+\usepackage{pgfplots}
+\usepackage{sectsty}
+\usepackage{cancel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\DeclareUnicodeCharacter{2212}{-}
+\usetikzlibrary{patterns}
+\usetikzlibrary{calc}
+
+
+\title{\emph{Randomized Algorithm}}
+
+\newcommand{\mycomment}[1]{}
+\NewDocumentCommand{\codeword}{v}{%
+\texttt{\textcolor{blue}{#1}}%
+}
+
+
+%\date{September 9, 1985}	% Here you can change the date presented in the paper title
+%\date{} 					% Or removing it
+
+\author{{\hspace{1mm}Rajat Dua} \\
+	Master of Science - Computer Science\\
+	Aarhus University\\
+	\texttt{au747653@uni.au.dk / 202303549@post.au.dk} \\
+	%% examples of more authors
+	\And
+	{\hspace{1mm}Ioannis Caragiannis} \\
+	Institut for Datalogi\\
+	Aarhus University\\
+	%% \AND
+	%% Coauthor \\
+	%% Affiliation \\
+	%% Address \\
+	%% \texttt{email} \\
+	%% \And
+	%% Coauthor \\
+	%% Affiliation \\
+	%% Address \\
+	%% \texttt{email} \\
+	%% \And
+	%% Coauthor \\
+	%% Affiliation \\
+	%% Address \\
+	%% \texttt{email} \\
+}
+
+% Uncomment to remove the date
+\date{January 29, 2024}
+
+% Uncomment to override  the `A preprint' in the header
+\renewcommand{\headeright}{Rajat Dua}
+\renewcommand{\undertitle}{Week 5 - Introduction}
+\renewcommand{\shorttitle}{\textit{Randomized Algorithm} Notes}
+
+%%% Add PDF metadata to help others organize their library
+%%% Once the PDF is generated, you can check the metadata with
+%%% $ pdfinfo template.pdf
+\hypersetup{
+pdftitle={Randomized Algorithm},
+pdfsubject={q-bio.NC, q-bio.QM},
+pdfauthor={Rajat Dua},
+pdfkeywords={randomized, notes, au, aarhus, university},
+}
+\captionsetup[table]{skip=10pt}
+
+% \subsectionfont{\underline}
+
+
+\begin{document}
+\maketitle
+\vspace{-1cm}
+\section{Introduction}
+\hrule
+\hrule
+
+\vspace{1cm}
+
+\subsection{Usual assumptions}
+
+\begin{itemize}
+    \item Fair coin $P_r[heads] = P_r[tails] = \frac{1}{2}$
+    \item Random selection among a finite set of items
+    \item Access to a random permutation of elements
+    \item Selection of a random point in the interval $[0,1]$
+    \item Selection from a finite or infinite set according to a non-uniform probability distribution
+\end{itemize}
+
+\subsection{Main characteristics}
+
+\begin{enumerate}
+    \item Deterministic: Same input, same output
+    \item Randomized: Same input, results into same or different output
+    \item The execution time is the same for deterministic algorithms
+\end{enumerate}
+
+\subsection{Why do we need it?}
+Maybe we want a solution that works well on "\textbf{average}". Or at least it should create a "\textbf{high-probability}" solution.
+
+\textbf{Derandomization}: we can work our way backwards.
+
+\subsection{Examples}
+
+\subsubsection{Contention Resolution}
+
+Transmitting a message between two nodes, if a collision happens when two messages are sent (simultaneously) the protocol says you need to re-transmit the message.
+
+There are defined protocols with an amazing timing system that avoids collisions.
+
+\subsubsection{Computing a large cut in a graph}
+
+Partition a set of nodes in two subsets of nodes, the edges need to be maximised between the two disjointed subsets.
+
+Just be greedy. You can count the edges from an assigned colour to a node. There are some maximization decisions when there isn't one, it makes an "arbitrary" choice too.
+
+This is an NP-hard problem.
+
+Can we do it better? How good is the algorithm?
+
+Let's just introduce "\textbf{randomness}". A red/Blue colour is assigned for each node.
+
+$X_e$ is the random variable that denotes whether $e$ is part of the "cut".
+
+Two nodes can have possibly 4 options - red-blue, blue-red, red-red, or blue-blue. It means the probability is 1/4. However, we need a distinct count so the probability is 1/2.
+
+\subsubsection{Formal representation for large cut example}
+
+$\mathcal{C}$ = Size of cut returned by algorithm.
+
+$\mathbb E$ = Expectation
+
+$\mathbb E[C] = E[\sum_{e\in E} X_e] \geq Opt/2$
+
+\textbf{Terms}
+\begin{itemize}
+    \item Linearity of Expectation
+    \item Concentration Bounds
+    \item Markov Inequality
+\end{itemize}
+
+Repeated execution of the same "randomized" algorithm gives a "good" solution.
+
+\section{Quicksort}
+
+A sorting algorithm that uses pivot and recursion which reorganizes the elements around the "pivot".
+
+You need to split the partitions in equal size to make it "optimal"
+
+For the "first try" algorithm which uses first index as the pivot can have the worst case scenario: $O(n^2)$ where the list is reverse sorted.
+
+The selection of the pivot is \textbf{crucial}. To make it from $O(n^2)$ to $O(nlogn)$ you can select the pivot on the basis of "median".
+
+$T(n/2)$ = Dividing the problem into two halves.
+
+$T_{parition}(n)$ = Time taken for partition, there is a linear algorithm O(n)
+
+$T_{median}(n)$
+
+> Master Theorem 
+
+\textbf{Tree structure} 
+
+$T(n) [O(n)] \rightarrow T(n/2), T(n/2) [O(n)]$
+
+$T(n/2) \rightarrow T(n/4), T(n/4) \ldots log(n)$
+
+\section{Randomized Quicksort}
+
+We need to exploit the median finding and reach $O(nlogn)$. The probability of the worst case when we are trying to pick a number at random will reach $1/n!$
+
+On average, a random split gives us a 25-75 split.
+
+$T(n) = T(3n/4) + T(n/4) + O(n)$
+
+$3n/4 = 75\%$ Split
+
+$n/4 = 25\%$ Split
+
+We can create the same master theorem tree here as well.
+
+$log_{\frac{4}{3}}(n) = \frac{log \: n}{log \frac{4}{3}}$
+
+This doesn't make a lot of sense but the idea is great to build on it.
+
+<Insert page from notes app> :: It talks about the maths behind $o(log n)$ average for a coin toss.
+
+\subsection{How to do comparisons?}
+
+The comparison between the pivot and the element from left or right to put it in the next.
+
+We need to get rid of some pair of comparisons which happen in $O(n^2)$ and we should not reach the worst-case scenario.
+
+Given input array, $z_j$, $i$-th smallest element.
+
+$X_{ij}$ is the r.v (random variable) that compares between $z_i$ and $z_j$ $(i<j)$ for the indices from $\{1,2 \ldots n\}$
+
+$X_{ij} = 1$ if $z_i$ and $z_j$ are in the same subarray. Otherwise, it is 0
+
+If the numbers are compared once that's good enough. You don't have to do it again.
+
+<Insert page from the notes app>: diagram of pivots and comparisons
+
+\subsubsection{Bounding the expectation of $C$}
+
+$\mathbb E[C] = \mathbb E[\sum^{n-1}_{i=1} \sum_{j=i+1}^{n} X_{ij}] = \sum^{n-1}_{i=1} \sum_{j=i+1}^{n} \mathbb E[X_{ij}] = \sum^{n-1}_{i=1} \sum_{j=i+1}^{n} P_r[X_{ij} = 1]$
+
+\subsubsection{Cases for pivots}
+
+$z_2$ as pivot $P_r = 1/n$, no comparisons
+$z_n$ as pivot $P_r = 1/n$, no comparisons
+If in between $z_3$ to $z_{n-1}$ no comparisons in between
+
+if $z_1$ is selected, $z_2$ and $z_n$ will be in the same subarray. If they are compared in the next phase, there will be some probability that they will be compared again or not.
+
+For the case in between, what is the probability that they will be compared? 
+
+We can ignore the elements smaller than $z_i$ and larger than $z_j$. So the total number of elements is $j-i+1$ and there are two cases to select from either $z_i$ or $z_j$ so the overall probability will be - 
+
+$P_r[X_{ij} = 1] = \frac{2}{j-i+1}$
+
+The proof has some issues with the summation bounds.
+
+$H_n$ - Harmonic of $n = log n = \sum^{n}_{k=1} \frac{1}{k}$
+
+<Insert page from notes app>: proof of "utmost" bound instead of least as mentioned in the slide.
+
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+
+\end{document}

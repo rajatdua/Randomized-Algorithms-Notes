@@ -1,0 +1,558 @@
+\documentclass{article}
+
+
+
+\usepackage{arxiv}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{lipsum}		% Can be removed after putting your text content
+\usepackage{graphicx}
+\usepackage[super]{natbib}
+\usepackage{doi}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{caption} 
+\usepackage{multicol}
+\usepackage{pgfplots}
+\usepackage{sectsty}
+\usepackage{cancel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\DeclareUnicodeCharacter{2212}{-}
+\usetikzlibrary{patterns}
+\usetikzlibrary{calc}
+
+
+\title{\emph{Randomized Algorithm}}
+
+\newcommand{\mycomment}[1]{}
+\NewDocumentCommand{\codeword}{v}{%
+\texttt{\textcolor{blue}{#1}}%
+}
+
+
+%\date{September 9, 1985}	% Here you can change the date presented in the paper title
+%\date{} 					% Or removing it
+
+\author{{\hspace{1mm}Rajat Dua} \\
+	Master of Science - Computer Science\\
+	Aarhus University\\
+	\texttt{au747653@uni.au.dk / 202303549@post.au.dk} \\
+	%% examples of more authors
+	\And
+	{\hspace{1mm}Kasper Green Larsen} \\
+	Institut for Datalogi\\
+	Aarhus University\\
+	%% \AND
+	%% Coauthor \\
+	%% Affiliation \\
+	%% Address \\
+	%% \texttt{email} \\
+	%% \And
+	%% Coauthor \\
+	%% Affiliation \\
+	%% Address \\
+	%% \texttt{email} \\
+	%% \And
+	%% Coauthor \\
+	%% Affiliation \\
+	%% Address \\
+	%% \texttt{email} \\
+}
+
+% Uncomment to remove the date
+\date{February 5, 2024}
+
+% Uncomment to override  the `A preprint' in the header
+\renewcommand{\headeright}{Rajat Dua}
+\renewcommand{\undertitle}{Week 6 - Probabilistic Inequalities}
+\renewcommand{\shorttitle}{\textit{Randomized Algorithm} Notes}
+
+%%% Add PDF metadata to help others organize their library
+%%% Once the PDF is generated, you can check the metadata with
+%%% $ pdfinfo template.pdf
+\hypersetup{
+pdftitle={Randomized Algorithm},
+pdfsubject={q-bio.NC, q-bio.QM},
+pdfauthor={Rajat Dua},
+pdfkeywords={randomized, notes, au, aarhus, university},
+}
+\captionsetup[table]{skip=10pt}
+
+% \subsectionfont{\underline}
+
+
+\begin{document}
+\maketitle
+\vspace{-1cm}
+\section{Dictionary Problem}
+\hrule
+
+\textbf{Input}: Set S of n-elements $x_1, \ldots, x_n \in [U] = \{0, \ldots, U-1 \}$  \\
+\textbf{Goal}: Build a data structure such that give query $x \in [U]$ can determine whether $x \in S$ [Contain Function]
+
+\section{Hashing with Chaining}
+
+Define a hash function: $h:[U] \rightarrow [m]$
+
+\begin{figure}[h]
+    \centering
+    
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Rectangle [id:dp029238116074155496] 
+\draw   (110,63) -- (432,63) -- (432,103) -- (110,103) -- cycle ;
+%Straight Lines [id:da4122753169100679] 
+\draw    (150,64) -- (150,104) ;
+%Straight Lines [id:da7120301562386417] 
+\draw    (190,63) -- (190,103) ;
+%Straight Lines [id:da17812619997703738] 
+\draw    (230,64) -- (230,104) ;
+%Straight Lines [id:da43418446404749544] 
+\draw    (270,63) -- (270,103) ;
+%Straight Lines [id:da24953329080892828] 
+\draw    (310,62) -- (310,102) ;
+%Straight Lines [id:da5645795113500691] 
+\draw    (351,63) -- (351,103) ;
+%Straight Lines [id:da9663561429318333] 
+\draw    (391,64) -- (391,104) ;
+%Straight Lines [id:da5465162735166391] 
+\draw    (211,39) -- (211,63) ;
+\draw [shift={(211,65)}, rotate = 270] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Shape: Square [id:dp7117998837177402] 
+\draw   (192,133) -- (230,133) -- (230,171) -- (192,171) -- cycle ;
+%Shape: Square [id:dp7531293506635548] 
+\draw   (192,193) -- (230,193) -- (230,231) -- (192,231) -- cycle ;
+%Shape: Square [id:dp4163405588974203] 
+\draw   (271,132) -- (309,132) -- (309,170) -- (271,170) -- cycle ;
+%Straight Lines [id:da9481684193915234] 
+\draw    (210,85) -- (210,131) ;
+\draw [shift={(210,133)}, rotate = 270] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da24942956085611523] 
+\draw    (210,172) -- (210,191) ;
+\draw [shift={(210,193)}, rotate = 270] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da8754622145602875] 
+\draw    (290,85) -- (290,131) ;
+\draw [shift={(290,133)}, rotate = 270] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+% Text Node
+\draw (71,76) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle A$};
+% Text Node
+\draw (125,36) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 0$};
+% Text Node
+\draw (392,36) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle m-1$};
+% Text Node
+\draw (197,16) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle h( x)$};
+% Text Node
+\draw (203,142) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle x_{1}$};
+% Text Node
+\draw (203,203) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle x_{3}$};
+% Text Node
+\draw (282,141) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle x_{2}$};
+% Text Node
+\draw (105,140) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle h( x_{1})$};
+% Text Node
+\draw (105,203) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle h( x_{3})$};
+% Text Node
+\draw (359,140) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle h( x_{2})$};
+% Connection
+\draw    (146,149.5) -- (198,150.68) ;
+\draw [shift={(200,150.73)}, rotate = 181.3] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+% Connection
+\draw    (146,212) -- (198,212) ;
+\draw [shift={(200,212)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+% Connection
+\draw    (356,149.25) -- (305,149.84) ;
+\draw [shift={(303,149.86)}, rotate = 359.34] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+\end{tikzpicture}
+\end{figure}
+
+\textbf{Task}: Query(x) - Scan the list $List(A[h(x)])$
+
+If the hash function is fixed, the worst case could be that all the entries are mapped to the same entry (hash key). We are working in $\mathbb Z_T$ and $T$ is the length of the array chained along a hash entry. It has the bound: $\lceil\frac{U}{m}\rceil$ where the inputs don't work well and we know that $S \subseteq T$
+
+\subsection{Which hash function to pick?}
+
+The first iteration, intuitively since it uses an in-built hash function sort of looks like $a\cdot x + b \: mod \: m$ and randomly pick the value of $a, b$ accordingly. However, it doesn't work the best. We will go more in-depth in upcoming lectures. But, let's assume we are working with this hash function:
+
+$$
+h(x) = ((a \cdot x + b \mod p) \mod m)
+$$
+
+Where,
+
+\begin{align*}
+    p = \text{prime} \\
+    a = \{1, \ldots, p-1\} \\
+    b = \{0, \ldots, p-1\} \\
+    p > U
+\end{align*}
+
+For the sake of analysis, we will use something called "Truly Random Hash Function".
+
+\subsection{Truly Random Hash Function}
+
+It has the same working as a hash function, however, it has certain properties that make it "truly" random. Even though it's not technically feasible to achieve since there will be $2^{64}$ entries that need to be equally randomly filled.
+
+Take the above example of the hash function diagram, and assume that all the entries in the hash function are filled with "random" values in $[m]$ that are "independent" of $h(x \in U)$. Let's write this more formally.
+
+$\forall x = h(x)$ is uniform in $[m]$ and independent of $\{h(0), \ldots, h(x-1), h(x+1), \ldots, h(U-1)\}$, this implies that $\forall x_1 \ldots x_k$ and $\forall v_1 \ldots v_k \in [m]: P_r[\forall h(x_1) = v_i] = \prod^{k}_{i=1} P_r[h(x_i) = v_i] = \frac{1}{m^k}$
+
+Another property is that computing $h(x)$ takes $O(1)$ time.
+
+\textbf{After picking randomness, it becomes deterministic.}
+
+If not hashing, one could use binary tree $O(\log n)$. Worst case for hashing with chaining $\Theta(n)$. We need to find the "expected" query time. Random Variable = Running time!
+
+\subsection{Expected Value of Collisions (Dumb)}
+
+\begin{align*}
+    \mathbb E[|List(A[h(x)])|]  \\
+    \mathbb E(X) = \sum_{x \in X} x \cdot P_r[X = x]
+\end{align*}
+
+Let's do it in a dumb way that is plugging in the values.
+
+\begin{align*}
+    \mathbb E(X) = \sum_{i=0}^{n} i \cdot P_r[|List(A[h(x)])| = i] \\
+    = \sum_{i=0}^{n} i \cdot \left(\frac{1}{m}\right)^i \cdot \left(1-\frac{1}{m}\right)^{n-i} \cdot \left(\begin{matrix}
+        n \\
+        i
+    \end{matrix}\right)
+\end{align*}
+
+This is super difficult and a lot taxing to calculate. However, the general idea is to calculate the expected length of a chain in a hash table using chaining for collision resolution. Here's what each term represents:
+\begin{itemize}
+    \item $\mathbb E(X)$: This is the expected value of the random variable $X$, which in this context is the length of a chain in the hash table.
+    \item $\sum_{i=0}^{n}$: This is a summation over all possible lengths of a chain, from 0 to $n$, where $n$ is the total number of elements inserted into the hash table.
+    \item $i$: This is the length of a chain. It's multiplied by the probability of a chain having that length to contribute to the overall expected value.
+    \item $P_r[|List(A[h(x)])| = i]$: This is the probability that the length of a chain equals $i$.
+    \item $\frac{1}{m}^i$: This is the probability that an element hashes to a specific slot in the hash table, raised to the power of $i$. Here, $m$ is the number of slots in the hash table.
+    \item $(1-\frac{1}{m})^{n-i}$: This is the probability that an element does not hash to a specific slot, raised to the power of $n-i$. It represents the probability of the other $n-i$ elements not hashing to the same slot.
+    \item $\left(\begin{matrix}  n \\
+        i
+    \end{matrix}\right)$: This is a binomial coefficient, also known as "n choose i". It represents the number of ways to choose $i$ elements from a set of $n$ elements. It's used here to account for all the different combinations of elements that could end up in the same chain.
+\end{itemize}
+
+In summary, this formula calculates the expected length of a chain in a hash table by summing up the lengths of all possible chains, each weighted by the probability of that chain occurring. It assumes that the hash function provides a uniform distribution of elements across the hash table.
+
+\subsection{Expected Value of Collisions (Smart)}
+
+Take a random variable $X$ which represents the length of a chain.
+
+$$
+X = |List(A[h(x)])| = \sum^{n}_{i=1} X_i
+$$
+
+We can define $X_i$ as follows - 
+
+$$
+X_i = \left\{ \begin{matrix} 1, && h(x) = h(x_i) \\ 0, && h(x) \neq h(x_i) \end{matrix}\right\}
+$$
+
+\subsubsection{Tool 1: Linearity of Expectation}
+
+$$
+\mathbb E[\sum^{n}_{i=1} X_i] = \sum^{n}_{i=1} \mathbb E[X_i]
+$$
+
+\subsubsection{For $x \notin S$}
+
+In this case, when $x \neq x_i$
+
+\begin{align*}
+    \mathbb E[X_i] = \sum^{n}_{i=1} 1 \cdot P_r[x_i = 1] + \cancel{0 \cdot P_r[X_i = 0]} \\ \\
+    = \sum^{n}_{i=1} P_r[h(x) = h(x_i)]
+    = \frac{n}{m}
+\end{align*}
+
+The probability that $x \neq x_i$ but $h(x) = h(x_i) = \frac{1}{m}$, it needs to hash to some value in a truly random function. Taking a sum over $n$ terms results in $\frac{n}{m}$
+
+Set the space used in this data structure $m = n$, a number of keys have linear space. This constant time 1 means that if we take an element and hash it to $n$-buckets that means every bucket has one element in the bucket and it is spread out evenly throughout the available space.
+
+$$
+ = \frac{n}{m} = \frac{m}{m} = 1
+$$
+
+Because only one element in $S$ can equal $x$.
+
+\subsubsection{For $x \in S$}
+
+In this case, you say you WILL have a collision with at least one such that $x \neq x_i$ but $h(x) = h(x_i)$.
+
+\begin{align*}
+        \mathbb E[X_i] = 1 + \sum^{n}_{i=1} P_r[h(x) = h(x_i)] \\
+        = 1 + \sum^{n}_{i=1} \frac{1}{m} \\
+        = 1 + \frac{n}{m} \\
+        = 1 + \frac{m}{m} \\
+        = 2
+\end{align*}
+
+In our case, we know that $n = m$ because truly a random hash function, so $\Theta(2) = \Theta(1)$ is still a constant time.
+
+\subsection{Bound Concentration}
+
+Obvious question to answer: How close is it to the expected case or how close is it to the worst case generally?
+
+We would like to argue how often it is significantly worse than the expected time. This is called concentration bound, how tightly concentrated is the query time around the expectation.
+
+\subsubsection{Tool 2: Markov's Inequality}
+
+Weak bound on how close the random variable is to the expectation. For non-negative discrete random variable $X$, the following inequality holds:
+
+$$
+P_r[X \geq t] \leq  \frac{\mathbb E[X]}{t}
+$$
+
+Random variable is the length of the list which is a non-negative number. Therefore, we can use this inequality. We already know that $\mathbb E[X] = 2$ from the above calculation.
+
+$$
+P_r[X \geq t] \leq  \frac{2}{t} = \Theta\left(\frac{1}{t}\right)
+$$
+
+This tells us how often I spend significantly time more than the expected time. 
+
+$$
+P_r[X \geq t] \leq  \frac{2}{\frac{n}{2}} \Rightarrow \frac{4}{n}
+$$
+
+This above is one of the worst cases when the length of the chain is half of the length of the numbers in an array.
+
+This is still not the worst-case scenario, it is highly unlikely that the above will happen. So, Markov's inequality is not tight but it is a weak bound. But for this example, it is not the best way to calculate the question we want to answer.
+
+\subsubsection{Tool 3: Chernoff's Bound}
+
+This states for $x_1, \ldots, x_n$ \textbf{independent} $0, 1$s random variables, for $X = \sum^{n}_{i=1} X_i$ that it holds for three cases:
+
+\begin{itemize}
+    \item \textbf{Case 1}: For any $0 < \delta < 1$, $\mu \leq \mathbb E[X]: P_r[X < (1-\delta) \cdot \mu] < e^{-\frac{\delta^2\mu}{2}}$
+    \item \textbf{Case 2}: For any $0 < \delta < 1$, $\mu \geq \mathbb E[X]: P_r[X > (1+\delta) \cdot \mu] < e^{-\frac{\delta^2\mu}{3}}$
+    \item \textbf{Case 3}: For any $\delta \geq 1$, $\mu \geq \mathbb E[X]: P_r[X > (1+\delta) \cdot \mu] < (\frac{e^{\delta}}{(1+\delta)^{1+\delta}})^{\mu}$
+\end{itemize}
+
+Instead of looking at the length of the $h(x)$ in $A$, we look at $A[i]$.
+
+$$
+X = |List(A[i])|
+$$
+
+We define the same R.V definition for analysis:
+
+$$
+X_j = \left\{\begin{matrix}
+    1, && h(x_j) = 1 \\
+    0, && Otherwise
+\end{matrix}\right\}
+$$
+
+$$
+X = \sum^{n}_{j=1} X_j
+$$
+
+Chernoff's bound requirement is that it needs to be on independent variables, which in this case is true because we are working with a truly random hashing function.
+
+$$
+\mathbb E[X] = \sum^{n}_{j=1} \mathbb E[X_j] = \frac{n}{m} = 1
+$$
+
+Since we want to see the worst case, we will pick case 3 since that talks about large deviation. So, we get nothing if we check the delta between $0$ and $1$ - which are case 1 and 2. Therefore, our goal is to find $P_r[X > t]$. We plug in the values - 
+
+\textbf{Case}: For $t \geq 2$
+
+\begin{align*} \\
+t = (1+\delta) \\
+\delta = t - 1 \\
+\mu = 1 \\
+\end{align*}
+
+We get:
+
+$$
+P_r[X>t] < \left(\frac{e^{t-1}}{t^t}\right)^1
+$$
+
+\textbf{Case}: For $t \geq 3$
+
+The above expression changes to 
+
+$$
+P_r[X>t] < \left(\frac{e}{t}\right)^t
+$$
+
+Because, for large $t$, $t-1 \approx t$
+
+\textbf{Case}: For $t = \frac{n}{2}$ [Worst Case]
+
+$$
+P_r[X>t] < \left(\frac{2e}{n}\right)^n \approx e^{-n \ln n}
+$$
+
+\subsubsection{Tool 4: Union Bound}
+
+Now, we need to check one more scenario when we want to find the time taken for the "largest" list. That's where Union Bound comes in, which goes as follows:
+
+$$
+P_r[\cup_i E_i] \leq \sum_i P_r[E_i]
+$$
+
+Where $E = E_1, \ldots, E_n$ are events. We can define $E_i$ as "BAD" events for the largest list. Let's write it down in a more formal way - 
+$$
+E_i = {|List(A(i))| > t}
+$$
+
+We also know from Chernoff's bound that for scenarios when the length of the list is more than $t$, we have probability as $\left(\frac{e}{t}\right)^t$ which are the "BAD" events ($E_i$). Therefore, plugging in the union-bound inequality, we get:
+
+\begin{align*}
+    P_r[\cup_i E_i] \leq \sum_i P_r[E_i] \\
+    \leq m \cdot \left(\frac{e}{t}\right)^t \\
+    \leq n \cdot \left(\frac{e}{t}\right)^t
+\end{align*}
+
+Question to answer: What's the good choice of 't'?
+
+$$t = \frac{4 \ln n}{\ln \ln n}$$
+
+Why? Because we are working with $\left(\frac{e}{t}\right)^t$, so using natural logarithmics can help simplify the term with $e$.
+
+Let's try to find the expression $\left(\frac{e}{t}\right)^t$ first then we can plug it in the above expression to find the probability of union of all the bad events.
+
+$$\left(\frac{e}{t}\right)^t = \frac{e}{4} \left(\frac{\ln \ln n}{\ln n}\right)^{\frac{4 \ln n}{\ln \ln n}}$$
+
+We know that $\frac{e}{4} = 1$ in upper bound, so we can say:
+
+$$\left(\frac{e}{t}\right)^t \leq \left(\frac{\ln \ln n}{\ln n}\right)^{\frac{4 \ln n}{\ln \ln n}}$$
+
+When we are working with $n \geq 3$, we know that $\ln \ln n \leq \sqrt{\ln n}$. How? Check the proof in section \ref{ln-ln-n-proof}
+
+Let's substitute this value in the expression to try to simplify it further.
+
+\begin{align*}
+    \left(\frac{e}{t}\right)^t \leq \left(\frac{\sqrt{\ln n}}{\ln n}\right)^{\frac{4 \ln n}{\ln \ln n}} \\
+    \leq \left(\frac{1}{\sqrt{\ln n}}\right)^{\frac{4 \ln n}{\ln \ln n}} \\
+    \leq \left(\frac{1}{\ln n}\right)^{\frac{2 \ln n}{\ln \ln n}}
+\end{align*}
+
+We can simplify this further because we can do the following: 
+
+$$
+\frac{1}{\ln n} = (\ln n)^{-1} = (e^{\ln \ln n})^{-1} = e^{-\ln \ln n}
+$$
+
+Therefore, we get this:
+
+\begin{align*}
+     \left(\frac{e}{t}\right)^t \leq \left(\frac{1}{\ln n}\right)^{\frac{2 \ln n}{\ln \ln n}} \\
+     \leq \left(e^{-\ln \ln n}\right)^{\frac{2 \ln n}{\ln \ln n}} \\
+     \leq e^{-2 \ln n} \\
+     \leq (e^{\ln n})^{-2} \\
+     \leq n^{-2} \\
+\end{align*}
+
+So, if we finally insert this $\left(\frac{e}{t}\right)^t$ value inside the first expression. We get:
+
+\begin{align*}
+    P_r[\cup_i E_i] \leq n \cdot \left(\frac{e}{t}\right)^t \\
+    \leq n \cdot n^{-2} \\
+    \leq n \cdot n^{-2} \\
+    \leq \frac{1}{n}
+\end{align*}
+
+This also gives us the negated probability when no list is "large".
+
+$$
+\neg P_r[U_i E_i] = 1 - P_r[U_i E_i] = 1 - \frac{1}{n}
+$$
+
+Therefore, with probability = $1- \frac{1}{n}$, the worse case comes out to be $\Theta\left(\frac{\log n}{\log \log n}\right)$. Which is asymptotically better than the binary tree, however, this only holds since we are under the assumption of a truly random hash function.
+
+\subsection{Control Worse Case}
+
+How can we control this worse case? How can we "bind" the list size ($t$) so that it doesn't exceed the value ($t = \frac{4 \ln n}{\ln \ln n}$) that we defined above? We construct the hash function as many times ($i$) as it is possible to achieve that metric.
+
+More formally, we can say with probability $\geq 1 - \frac{1}{n}, \forall_i: |List(A[i])| \leq \frac{4 \ln n}{\ln \ln n}$. Before construction time, we had worst-case $\Theta(n)$ since we would need to traverse all the items in the chain. However, now we can say after generating hash functions that:
+
+$$
+X = \Theta(n) + \sum_{i=1}^{\infty} X_i \cdot \Theta(n)
+$$
+
+Let's create a random variable similarly for analysis of this $X_i$ as follows:
+
+$$
+X_i = \left\{
+\begin{matrix}
+    1, && \text{ if rebuild } \geq i \text{-times} \\
+    0, && \text{otherwise}
+\end{matrix}
+\right\}
+$$
+
+Let's use linearity of expectation again:
+
+\begin{align*}
+    \mathbb E[X] = \mathbb E[n + \sum_{i=1}^{\infty} X_i \cdot n] \\
+    = n +  \sum_{i=1}^{\infty} \mathbb E[X_i] \cdot n \\
+    = n + n \sum_{i=1}^{\infty} P_r[\text{rebuild } \geq i\text{-times}] \\
+    = n + n \left[\frac{1}{n} + \frac{1}{n^2} + \ldots + \frac{1}{n^i} \right] \\
+    = n + n \cdot \sum_{i=1}^{\infty} \left(\frac{1}{n}\right)^{i} \\
+    \leq  n + n \cdot \sum_{i=1}^{\infty} \left(\frac{1}{2^i}\right) = 2n
+\end{align*}
+
+So, you'll spend more time in construction to make the algorithm work at runtime in less than $\theta(n)$ as proposed in the worst-case so, the algorithm after good construction will work in $\Theta\left(\frac{\log n}{\log \log n}\right)$.
+
+\section{Remarks}
+
+\subsection{Why $\ln \ln n \leq \sqrt{\ln n}$? for $n \geq 3$}\label{ln-ln-n-proof}
+
+\begin{align*}
+    \ln \ln n \leq \sqrt{\ln n} \\
+    f(n) = \sqrt{\ln n} - \ln \ln n \\
+    f(n) = 0, \text{ for } n \geq 3 \\
+    f'(n) = \frac{1}{2\sqrt{\ln n}} \cdot \frac{1}{n} - \left(\frac{1}{\ln n} \cdot \frac{1}{n}\right) \\
+    = \frac{1}{\sqrt{\ln n} \cdot n} \left(\frac{1}{2} - \frac{1}{\sqrt{\ln n}}\right)
+\end{align*}
+
+Note: Used chain rule to calculate $f'(n)$.
+
+The term $\frac{1}{\sqrt{\ln n} \cdot n}$ will always be positive. The whole term being positive or negative depends upon the remaining expression. Inside the remaining expression, the term is either:
+
+\begin{align*}
+\left(\frac{1}{2} - \frac{1}{\sqrt{\ln n}}\right) = \left\{
+    \begin{matrix}
+        -ve, && \frac{1}{\sqrt{\ln n}} < \frac{1}{2} \\
+        +ve, && \frac{1}{\sqrt{\ln n}} > \frac{1}{2} \\
+    \end{matrix}
+    \right\}
+\end{align*}
+
+Since, we want $f(n) = 0$ let's consider the case:
+
+$$
+\frac{1}{\sqrt{\ln n}} > \frac{1}{2}
+$$
+
+Which means:
+
+$$
+\ln n > 4 \Rightarrow n > e^4
+$$
+
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+
+\end{document}
